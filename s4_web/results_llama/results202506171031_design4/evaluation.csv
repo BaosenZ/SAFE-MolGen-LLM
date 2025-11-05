@@ -1,0 +1,19 @@
+SMILES,Target_metal,Other_metal,Source,Similarity_to_Experimental,Similarity_to_Generated,LogP
+CC12CCC(c3nnc(-c4cccc(-c5nnc6c(n5)C5(C)CCC6C5(C)C)n4)nc31)C2(C)CC#N,ORGANIC,AQUEOUS,LLM generated,MEDIUM,,ORGANIC
+CC(C)(C)c1cc(-c2cc(C(C)(C)C)cc(-c3nnc4c(n3)C(C)(C)CCC4(C)C)n2)nc(-c2nnc3c(n2)C(C)(C)CCC3(C)C)c1C(O)C#N,ORGANIC,AQUEOUS,LLM generated,MEDIUM,,ORGANIC
+CC12CCC(c3nnc(-c4cccc(-c5cccc(-c6nnc7c(n6)C6(C)CCC7C6(C)C)n5)n4)nc31)C2(C)C(C#N)C(=O)N(C)C,ORGANIC,AQUEOUS,LLM generated,MEDIUM,,ORGANIC
+CC12CCC(c3nnc(-c4cccc(-c5nnc6c(n5)C5(C)CCC6C5(C)C)n4)nc31)C2(C)CC#NCC(O)C#N,Invalid SMILES,Invalid SMILES,LLM generated,Invalid SMILES,Invalid SMILES,Invalid SMILES
+CC(C)(C)c1cc(-c2cc(C(C)(C)C)cc(-c3nnc4c(n3)C(C)(C)CCC4(C)C)n2)nc(-c2nnc3c(n2)C(C)(C)CCC3(C)C)c1C(O)C#NCC(O)C#N,Invalid SMILES,Invalid SMILES,LLM generated,Invalid SMILES,Invalid SMILES,Invalid SMILES
+CCCCCc1nnc(-c2cccc(-c3cccc(-c4nnc(CCCCC)c(CCCCC)n4)n3)n2)nc1CCCCC(C#N)C(=O)N(C)C,ORGANIC,AQUEOUS,LLM generated,MEDIUM,MEDIUM,ORGANIC
+CC12CCC(c3nnc(-c4cccc(-c5nnc6c(n5)C5(C)CCC6C5(C)C)n4)nc31)C2(C)CC#N,ORGANIC,AQUEOUS,LLM generated,HIGH,HIGH,ORGANIC
+CC(C)(C)c1cc(-c2cc(C(C)(C)C)cc(-c3nnc4c(n3)C(C)(C)CCC4(C)C)n2)nc(-c2nnc3c(n2)C(C)(C)CCC3(C)C)c1C(O)C#N,ORGANIC,AQUEOUS,LLM generated,HIGH,HIGH,ORGANIC
+CC12CCC(c3nnc(-c4cccc(-c5cccc(-c6nnc7c(n6)C6(C)CCC7C6(C)C)n5)n4)nc31)C2(C)C(C#N)C(=O)N(C)C,ORGANIC,AQUEOUS,LLM generated,HIGH,HIGH,ORGANIC
+CC1(C)CCC(C)(C)c2nc(-c3cccc(-c4nnc5c(n4)C(C)(C)CCC5(C)C)n3)nnc21,ORGANIC,AQUEOUS,LLM generated,MEDIUM,MEDIUM,ORGANIC
+CC(C)(C)Cc1cc(-c2cc(C(C)(C)C)cc(-c3nnc4c(n3)C(C)(C)CCC4(C)C)n2)nc(-c2nnc3c(n2)C(C)(C)CCC3(C)C)c1C(O)CC#N,ORGANIC,AQUEOUS,LLM generated,MEDIUM,MEDIUM,ORGANIC
+CCCCCc1nnc(-c2cccc(-c3cccc(-c4nnc(CCCCC)c(CCCCC)n4)n3)n2)nc1CCCCC(C#N)C(=O)N(CC)C,ORGANIC,AQUEOUS,LLM generated,MEDIUM,MEDIUM,ORGANIC
+CC12CCC(c3nnc(-c4cccc(-c5nnc6c(n5)C5(C)CCC6C5(C)C)n4)nc31)C2(C)CC#N,ORGANIC,AQUEOUS,LLM generated,HIGH,HIGH,ORGANIC
+CC(C)(C)c1cc(-c2cc(C(C)(C)C)cc(-c3nnc4c(n3)C(C)(C)CCC4(C)C)n2)nc(-c2nnc3c(n2)C(C)(C)CCC3(C)C)c1C(O)CC#N,ORGANIC,AQUEOUS,LLM generated,MEDIUM,MEDIUM,ORGANIC
+CCCCCc1nnc(-c2cccc(-c3cccc(-c4nnc(CCCCC)c(CCCCC)n4)n3)n2)nc1CCCCC(C#N)C(=O)N(CC)C,ORGANIC,AQUEOUS,LLM generated,HIGH,HIGH,ORGANIC
+CC1(C)CCC(C)(C)c2nc(-c3cccc(-c4nnc5c(n4)C(C)(C)CCC5(C)C)n3)nnc21C#N,Invalid SMILES,Invalid SMILES,LLM generated,Invalid SMILES,Invalid SMILES,Invalid SMILES
+CCCCCc1nnc(-c2cccc(-c3cccc(-c4nnc(CCCCC)c(CCCCC)n4)n3)n2)nc1CCCCC(C#N)C(=O)N(CCC)C,ORGANIC,AQUEOUS,LLM generated,MEDIUM,MEDIUM,ORGANIC
+CC12CCC(c3nnc(-c4cccc(-c5nnc6c(n5)C5(C)CCC6C5(C)C)n4)nc31)C2(C)CC#N,ORGANIC,AQUEOUS,LLM generated,HIGH,HIGH,ORGANIC

@@ -1,0 +1,2 @@
+LLM model,ML model,Design focus,SF threshold (eval),Metal 1,Metal 2,Tanimoto RefExp max,Tanimoto RefGen max,Tanimoto RefExp min,Tanimoto RefGen min,LogP min,Molecules per message,API calls
+llama3.3t1:70b,xgb-model-0.1-1,functional groups to bind target metal,10,Am(III),Eu(III),0.85,0.85,0.25,0.25,3.0,3,6

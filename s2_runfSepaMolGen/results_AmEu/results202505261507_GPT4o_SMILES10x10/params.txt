@@ -1,0 +1,8 @@
+Number_of_LLM_Call: 10
+Number_of_Molecules_Per_LLM_Call: 10
+Threshold_LogP: 3
+Target_Metal: Am(III)
+Other_Metal: Eu(III)
+Supervised_ML: resources/xgb_model0.1-1.sav
+Design_Focus: tri-dentate or tetra-dentate binding ligands with a mix of nitrogen and oxygen donor functional groups
+Experimental_SMILES_Eval_Path: ./expSMILESeval_AmEu/expSMILESeval.xlsx

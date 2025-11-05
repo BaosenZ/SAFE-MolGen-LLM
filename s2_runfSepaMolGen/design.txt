@@ -1,0 +1,11 @@
+design 1
+design_focus = "binding ligands with 4 to 8 nitrogen atoms"
+
+design 2
+design_focus = "tri-dentate or tetra-dentate binding ligands with a mix of nitrogen and oxygen donor functional groups"
+
+desing 3
+design_focus = "tri-dentate or tetra-dentate binding ligands with a mix of nitrogen and oxygen donor functional groups"
+
+design 4
+design_focus = "binding ligands must be structurally similar to bis-triazinyl bipyridines (BTBPs)"
