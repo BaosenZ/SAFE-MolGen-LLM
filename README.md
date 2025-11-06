@@ -6,7 +6,7 @@
 
 ⚠️The full dataset will be available after acceptance. Stay Tuned! 
 
-This repository contains the datasets and codes for **_SAFE-MolGen_**. We also deployed website version for this work with the link of <a href='www.safe.lanl.gov/molgen/doc' target='_blank'>www.safe.lanl.gov/molgen/doc</a>. 
+This repository contains the datasets and codes for **_SAFE-MolGen_**. We also deployed website version for this work with the link of <a href='https://www.safe.lanl.gov/molgen/doc' target='_blank'>www.safe.lanl.gov/molgen/doc</a>. 
 
 Below are the details for this repository.  
 
