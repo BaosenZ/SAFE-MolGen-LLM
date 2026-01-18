@@ -1,10 +1,8 @@
-# SAFE-MolGen (Paper Under Review...)
+# SAFE-MolGen
 
 [![Python Version](https://img.shields.io/badge/python-3.11.7-blue)](https://www.python.org/)
 [![Anaconda Version](https://img.shields.io/badge/anaconda-2.5.2-green)](https://anaconda.org/)
 [![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
-
-⚠️The full dataset will be available after acceptance. Stay Tuned! 
 
 This repository contains the datasets and codes for **_SAFE-MolGen_**. We also deployed website version for this work with the link of <a href='https://www.safe.lanl.gov/molgen/doc' target='_blank'>www.safe.lanl.gov/molgen/doc</a>. 
 
@@ -13,7 +11,7 @@ Below are the details for this repository.
 ## Repository Folder Structure Description
 
 The development of the method is divided into several steps, each represented by a folder: 
-- Prepare the datasets (`0_prepData`). (⚠️The full dataset will be available after acceptance!)
+- Prepare the datasets (`0_prepData`). 
 - Train supervised ML models (`s1_trainML`). 
 - Run SAFE-MolGen (`s2_runfSepaMolGen`).
 - Postprocess the results of SAFE-MolGen (`s3_postprocResults`).
@@ -43,4 +41,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## How to Cite
 
-(1) Author Surname, Author Initial. Title; Publisher: City, Year Published; p. Pages Used.
+Zhang, B.; Summers, T. J.; Augustine, L. J.; Taylor, M. G.; Geist, A.; Li, R.; Batista, E. R.; Perez, D.; Yang, P.; Schrier, J. Augmenting Large Language Models for Automated Discovery of f-Element Extractants. J. Am. Chem. Soc. 2026. DOI: https://doi.org/10.1021/jacs.5c19738.

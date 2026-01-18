@@ -1,0 +1,1943 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     76498,       1935]
+NotebookOptionsPosition[     70066,       1822]
+NotebookOutlinePosition[     70637,       1842]
+CellTagsIndexPosition[     70594,       1839]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetDirectory", "@", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"$PlotTheme", "=", "\"\<Scientific\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", 
+  "\"\<../hydrometallurgy-schema/src/concentration_parsing.wl\>\""}]}], \
+"Input",
+ CellChangeTimes->{{3.910105611593152*^9, 3.910105966038715*^9}, {
+   3.910106045367472*^9, 3.910106079438045*^9}, {3.910106129749935*^9, 
+   3.910106138034985*^9}, {3.910106239591892*^9, 3.910106240293477*^9}, {
+   3.910106299270081*^9, 3.910106302988824*^9}, {3.9101063589828672`*^9, 
+   3.9101063653229938`*^9}, {3.910106476120803*^9, 3.910106496922909*^9}, {
+   3.910106612634477*^9, 3.9101066288039017`*^9}, 3.910107821411882*^9, {
+   3.9101718458294086`*^9, 3.9101718582520857`*^9}, {3.910171889916322*^9, 
+   3.910171900372218*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"7c8640a4-6e29-4d79-a917-b9f9735618ed"],
+
+Cell[CellGroupData[{
+
+Cell["Some preliminary data distribution checks", "Section",
+ CellChangeTimes->{{3.910108773270563*^9, 
+  3.910108783858107*^9}},ExpressionUUID->"3c1ccf77-124e-4dd5-a4ee-\
+8519311b3781"],
+
+Cell[CellGroupData[{
+
+Cell["Do we need to keep track of concentration?", "Subsection",
+ CellChangeTimes->{{3.910178664201206*^9, 
+  3.910178669422323*^9}},ExpressionUUID->"c37a1e3e-1ae3-4e2f-8f8f-\
+74fb649b06e9"],
+
+Cell["\<\
+Of the 1104 reported D values, only 407 of them report the initial \
+concentration of the metal.  When they do, these tend to be small, mostly 1 \
+kBq/mL, less frequently 4.5 kBq/mL, and infrequently 9 kBq/mL for the two \
+metal species.  Just to get a sense of the concentration levels here, let\
+\[CloseCurlyQuote]s evaluate this:\
+\>", "Text",
+ CellChangeTimes->{{3.910178673017797*^9, 3.910178678633959*^9}, {
+  3.910178809342278*^9, 
+  3.910178873360289*^9}},ExpressionUUID->"db69afd5-4c4b-4e79-9945-\
+ca21fb050949"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   TemplateBox[<|"query" -> "1 kBq/mL", "boxes" -> TemplateBox[{"1", 
+        RowBox[{
+         "\"kBq\"", "\[InvisibleSpace]", "\"/\"", "\[InvisibleSpace]", 
+          "\"mL\""}], "kilobecquerel per milliliter", 
+        FractionBox["\"Kilobecquerels\"", "\"Milliliters\""]}, "Quantity", 
+       SyntaxForm -> Mod], "allassumptions" -> {}, "assumptions" -> {}, 
+     "open" -> {1, 2}, 
+     "querystate" -> {
+      "Online" -> True, "Allowed" -> True, "mparse.jsp" -> 
+       0.443828`6.098759690810409, "Messages" -> {}}, "contextinfo" -> 
+     Automatic, "version" -> 5|>,
+    "LinguisticAssistantTemplate"], "/", "\[IndentingNewLine]", 
+   RowBox[{"EntityValue", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"IsotopeData", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<Am\>\"", ",", "241"}], "}"}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"EntityProperty", "[", 
+      RowBox[{"\"\<Isotope\>\"", ",", "\"\<MolarRadioactivity\>\""}], "]"}]}],
+     "]"}]}], "//", 
+  RowBox[{
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"#", ",", "\"\<Molar\>\""}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.910178534832294*^9, 3.910178653662519*^9}, 
+   3.910178876608683*^9},
+ CellLabel->
+  "In[230]:=",ExpressionUUID->"e7a5c6c3-5c19-460d-b683-e06b3e236137"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "3.267940884198129638388286011263`4.*^-8", "\"M\"", "molar", "\"Molar\""},
+  "Quantity"]], "Output",
+ CellChangeTimes->{
+  3.9101785794237127`*^9, {3.910178615191774*^9, 3.910178654001173*^9}, 
+   3.910550343773046*^9},
+ CellLabel->
+  "Out[230]=",ExpressionUUID->"a536a75d-1b7d-4dfd-bc7b-0f0e9aa05436"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   TemplateBox[<|"query" -> "1 kBq/mL", "boxes" -> TemplateBox[{"1", 
+        RowBox[{
+         "\"kBq\"", "\[InvisibleSpace]", "\"/\"", "\[InvisibleSpace]", 
+          "\"mL\""}], "kilobecquerel per milliliter", 
+        FractionBox["\"Kilobecquerels\"", "\"Milliliters\""]}, "Quantity", 
+       SyntaxForm -> Mod], "allassumptions" -> {}, "assumptions" -> {}, 
+     "open" -> {1, 2}, 
+     "querystate" -> {
+      "Online" -> True, "Allowed" -> True, "mparse.jsp" -> 
+       0.443828`6.098759690810409, "Messages" -> {}}, "contextinfo" -> 
+     Automatic, "version" -> 5|>,
+    "LinguisticAssistantTemplate"], "/", "\[IndentingNewLine]", 
+   RowBox[{"EntityValue", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"IsotopeData", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<Eu\>\"", ",", "152"}], "}"}], "]"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"EntityProperty", "[", 
+      RowBox[{"\"\<Isotope\>\"", ",", "\"\<MolarRadioactivity\>\""}], "]"}]}],
+     "]"}]}], "//", 
+  RowBox[{
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"#", ",", "\"\<Molar\>\""}], "]"}], "&"}]}]], "Input",
+ CellChangeTimes->{{3.910178700269825*^9, 3.910178703595366*^9}},
+ CellLabel->
+  "In[231]:=",ExpressionUUID->"18f254cd-0549-4029-bd8e-3eabe8d7174d"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "1.02271040019306032692516040943`5.*^-9", "\"M\"", "molar", "\"Molar\""},
+  "Quantity"]], "Output",
+ CellChangeTimes->{3.91017870433807*^9, 3.910550343865856*^9},
+ CellLabel->
+  "Out[231]=",ExpressionUUID->"f5f945ca-8e7c-4a8b-983d-0b9bbc6ba43c"]
+}, Open  ]],
+
+Cell["\<\
+Conclusion:  This is a very small quantity (much smaller than our ligand \
+concentrations), and so we can exclude this in our modeling tasks (giving us \
+more data); in other words, our model will assume that D is independent of \
+the concentration, provided it is in the range of these studies (i.e., small).\
+\>", "Text",
+ CellChangeTimes->{{3.9101788868533077`*^9, 
+  3.910178978720346*^9}},ExpressionUUID->"60d50fe3-10db-49ff-8c7e-\
+a2a996a920da"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Time", "Subsection",
+ CellChangeTimes->{{3.9101078263777847`*^9, 
+  3.910107828620572*^9}},ExpressionUUID->"3362e98a-2eda-42ae-8ef1-\
+6bc52d2d8d63"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", 
+   RowBox[{"lookupTimes", ",", "times"}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"lookupTimes", "[", 
+    RowBox[{"f_", "?", "FileExistsQ"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Lookup", "[", 
+          RowBox[{"#", ",", "\"\<quantity\>\"", ",", "Nothing"}], "]"}], 
+         "&"}], "@", 
+        RowBox[{"Lookup", "[", 
+         RowBox[{"#", ",", "\"\<time\>\"", ",", "Nothing"}], "]"}]}], "&"}], 
+      "@", 
+      RowBox[{"Lookup", "[", 
+       RowBox[{"#", ",", "\"\<reaction conditions\>\"", ",", "Nothing"}], 
+       "]"}]}], "&"}], "@", 
+    RowBox[{"Import", "[", 
+     RowBox[{"f", ",", "\"\<RawJSON\>\""}], "]"}]}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"times", "=", 
+    RowBox[{"FileSystemMap", "[", 
+     RowBox[{"lookupTimes", ",", "\"\<.\>\"", ",", 
+      RowBox[{"FileNameForms", "->", "\"\<ST*.json\>\""}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Histogram", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"DeleteMissing", "@", 
+     RowBox[{"Flatten", "@", 
+      RowBox[{"Values", "@", "times"}]}]}], ",", "\[IndentingNewLine]", 
+    "Automatic", ",", "Automatic", ",", "\[IndentingNewLine]", 
+    RowBox[{"FrameLabel", "->", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Time (min)\>\"", ",", "\"\<Counts\>\""}], "}"}]}]}], "]"}],
+   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Show", "[", 
+  RowBox[{"%", ",", 
+   RowBox[{"PlotRange", "->", "All"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.910105611593152*^9, 3.910105966038715*^9}, {
+   3.910106045367472*^9, 3.910106079438045*^9}, {3.910106129749935*^9, 
+   3.910106138034985*^9}, {3.910106239591892*^9, 3.910106240293477*^9}, {
+   3.910106299270081*^9, 3.910106302988824*^9}, {3.9101063589828672`*^9, 
+   3.9101063653229938`*^9}, {3.910106476120803*^9, 3.910106496922909*^9}, {
+   3.910106612634477*^9, 3.9101066288039017`*^9}, 3.910107821411882*^9, {
+   3.910171914357272*^9, 3.910171935212055*^9}},
+ CellLabel->
+  "In[232]:=",ExpressionUUID->"b9902538-58cf-44d5-8df6-82fa0aa1186b"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[0.92, 0.488, 0.2432], EdgeForm[{Opacity[0.511], Thickness[
+    Small]}], {}, 
+    {RGBColor[0.92, 0.488, 0.2432], EdgeForm[{Opacity[0.511], Thickness[
+     Small]}], RectangleBox[{0., 0}, {5., 1.},
+      RoundingRadius->0], RectangleBox[{5., 0}, {10., 1.},
+      RoundingRadius->0], RectangleBox[{10., 0}, {15., 1.},
+      RoundingRadius->0], RectangleBox[{15., 0}, {20., 75.},
+      RoundingRadius->0], RectangleBox[{20., 0}, {25., 33.},
+      RoundingRadius->0], RectangleBox[{30., 0}, {35., 10.},
+      RoundingRadius->0], RectangleBox[{45., 0}, {50., 26.},
+      RoundingRadius->0], RectangleBox[{60., 0}, {65., 325.},
+      RoundingRadius->0], RectangleBox[{90., 0}, {95., 5.},
+      RoundingRadius->0], RectangleBox[{120., 0}, {125., 10.},
+      RoundingRadius->0], RectangleBox[{180., 0}, {185., 1.},
+      RoundingRadius->0], RectangleBox[{240., 0}, {245., 3.},
+      RoundingRadius->0], RectangleBox[{320., 0}, {325., 1.},
+      RoundingRadius->0], RectangleBox[{360., 0}, {365., 45.},
+      RoundingRadius->0], RectangleBox[{1080., 0}, {1085., 2.},
+      RoundingRadius->0], RectangleBox[{1800., 0}, {1805., 2.},
+      RoundingRadius->
+       0]}, {}, {}}, {{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{False, False},
+  AxesLabel->{None, None},
+  AxesOrigin->{-2.5, 0},
+  Frame->True,
+  FrameLabel->{{
+     FormBox[
+      TagBox["\"Counts\"", HoldForm], TraditionalForm], None}, {
+     FormBox[
+      TagBox["\"Time (min)\"", HoldForm], TraditionalForm], None}},
+  FrameStyle->Automatic,
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{{0}, {0}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  LabelStyle->{FontFamily -> "Times"},
+  PlotRange->{{0., 125.}, {All, All}},
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {None, 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.910106499545888*^9, 3.9105503445017843`*^9},
+ CellLabel->
+  "Out[235]=",ExpressionUUID->"5ed12228-2dae-4d1b-8952-f2214f7b6997"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[0.92, 0.488, 0.2432], EdgeForm[{Opacity[0.511], Thickness[
+    Small]}], {}, 
+    {RGBColor[0.92, 0.488, 0.2432], EdgeForm[{Opacity[0.511], Thickness[
+     Small]}], RectangleBox[{0., 0}, {5., 1.},
+      RoundingRadius->0], RectangleBox[{5., 0}, {10., 1.},
+      RoundingRadius->0], RectangleBox[{10., 0}, {15., 1.},
+      RoundingRadius->0], RectangleBox[{15., 0}, {20., 75.},
+      RoundingRadius->0], RectangleBox[{20., 0}, {25., 33.},
+      RoundingRadius->0], RectangleBox[{30., 0}, {35., 10.},
+      RoundingRadius->0], RectangleBox[{45., 0}, {50., 26.},
+      RoundingRadius->0], RectangleBox[{60., 0}, {65., 325.},
+      RoundingRadius->0], RectangleBox[{90., 0}, {95., 5.},
+      RoundingRadius->0], RectangleBox[{120., 0}, {125., 10.},
+      RoundingRadius->0], RectangleBox[{180., 0}, {185., 1.},
+      RoundingRadius->0], RectangleBox[{240., 0}, {245., 3.},
+      RoundingRadius->0], RectangleBox[{320., 0}, {325., 1.},
+      RoundingRadius->0], RectangleBox[{360., 0}, {365., 45.},
+      RoundingRadius->0], RectangleBox[{1080., 0}, {1085., 2.},
+      RoundingRadius->0], RectangleBox[{1800., 0}, {1805., 2.},
+      RoundingRadius->
+       0]}, {}, {}}, {{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{False, False},
+  AxesLabel->{None, None},
+  AxesOrigin->{-2.5, 0},
+  Frame->True,
+  FrameLabel->{{
+     FormBox[
+      TagBox["\"Counts\"", HoldForm], TraditionalForm], None}, {
+     FormBox[
+      TagBox["\"Time (min)\"", HoldForm], TraditionalForm], None}},
+  FrameStyle->Automatic,
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{{0}, {0}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  LabelStyle->{FontFamily -> "Times"},
+  PlotRange->All,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {None, 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.910106499545888*^9, 3.9105503445112267`*^9},
+ CellLabel->
+  "Out[236]=",ExpressionUUID->"02969cf7-1e19-40df-bfd2-31e2479a72d1"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Temperature", "Section",
+ CellChangeTimes->{{3.910107831812213*^9, 
+  3.910107832726495*^9}},ExpressionUUID->"1923552a-7307-4d4d-9d33-\
+ec5826bcbd34"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"lookupTemperature", "[", 
+    RowBox[{"f_", "?", "FileExistsQ"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Lookup", "[", 
+          RowBox[{"#", ",", "\"\<quantity\>\"", ",", "Nothing"}], "]"}], 
+         "&"}], "@", 
+        RowBox[{"Lookup", "[", 
+         RowBox[{"#", ",", "\"\<temperature\>\"", ",", "Nothing"}], "]"}]}], 
+       "&"}], "@", 
+      RowBox[{"Lookup", "[", 
+       RowBox[{"#", ",", "\"\<reaction conditions\>\"", ",", "Nothing"}], 
+       "]"}]}], "&"}], "@", 
+    RowBox[{"Import", "[", 
+     RowBox[{"f", ",", "\"\<RawJSON\>\""}], "]"}]}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"temps", "=", 
+   RowBox[{"FileSystemMap", "[", 
+    RowBox[{"lookupTemperature", ",", "\"\<.\>\"", ",", 
+     RowBox[{"FileNameForms", "->", "\"\<ST*.json\>\""}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.9101056098271513`*^9, 3.9101056107936287`*^9}, {
+  3.910106253946081*^9, 3.910106276102394*^9}},
+ CellLabel->
+  "In[237]:=",ExpressionUUID->"0a74e1b8-31ec-4f44-9885-0034b0d7f8c6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Histogram", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"DeleteMissing", "@", 
+    RowBox[{"Flatten", "@", 
+     RowBox[{"Values", "@", "temps"}]}]}], ",", "\[IndentingNewLine]", 
+   "Automatic", ",", "Automatic", ",", "\[IndentingNewLine]", 
+   RowBox[{"FrameLabel", "->", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Temperature (C)\>\"", ",", "\"\<Counts\>\""}], "}"}]}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.910106282783611*^9, 3.910106283298206*^9}, {
+  3.910106515694364*^9, 3.9101065749950314`*^9}},
+ CellLabel->
+  "In[239]:=",ExpressionUUID->"15d647cb-86b2-447e-8fad-54720f585e54"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[0.92, 0.488, 0.2432], EdgeForm[{Opacity[0.644], Thickness[
+    Small]}], {}, 
+    {RGBColor[0.92, 0.488, 0.2432], EdgeForm[{Opacity[0.644], Thickness[
+     Small]}], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           RectangleBox[{20., 0}, {21., 62.}, "RoundingRadius" -> 0]},
+          
+          ImageSizeCache->{{40.239999999999895`, 92.65999999999997}, {
+           48.562856802453396`, 83.30202934934087}}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 62]& ,
+        TagBoxNote->"62"],
+       StyleBox["62", {FontFamily -> "Times"}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[62, {FontFamily -> "Times"}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           RectangleBox[{21., 0}, {22., 41.}, "RoundingRadius" -> 0]},
+          
+          ImageSizeCache->{{92.15999999999997, 144.58000000000004`}, {
+           60.15999589091528, 83.30202934934087}}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 41]& ,
+        TagBoxNote->"41"],
+       StyleBox["41", {FontFamily -> "Times"}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[41, {FontFamily -> "Times"}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           RectangleBox[{22., 0}, {23., 345.}, "RoundingRadius" -> 0]},
+          
+          ImageSizeCache->{{144.08000000000004`, 
+           196.5000000000001}, {-107.72239853253296`, 83.30202934934087}}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 345]& ,
+        TagBoxNote->"345"],
+       StyleBox["345", {FontFamily -> "Times"}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[345, {FontFamily -> "Times"}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           RectangleBox[{23., 0}, {24., 72.}, "RoundingRadius" -> 0]},
+          
+          ImageSizeCache->{{196.0000000000001, 248.41999999999996`}, {
+           43.040409617471546`, 83.30202934934087}}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 72]& ,
+        TagBoxNote->"72"],
+       StyleBox["72", {FontFamily -> "Times"}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[72, {FontFamily -> "Times"}], "Tooltip"]& ], 
+     TagBox[
+      TooltipBox[
+       TagBox[
+        TagBox[
+         DynamicBox[{
+           FEPrivate`If[
+            CurrentValue["MouseOver"], 
+            EdgeForm[{
+              GrayLevel[0.5], 
+              AbsoluteThickness[1.5], 
+              Opacity[0.66]}], {}, {}], 
+           RectangleBox[{25., 0}, {26., 21.}, "RoundingRadius" -> 0]},
+          
+          ImageSizeCache->{{299.84000000000003`, 352.2600000000001}, {
+           71.20489026087898, 83.30202934934087}}],
+         "DelayedMouseEffectStyle"],
+        StatusArea[#, 21]& ,
+        TagBoxNote->"21"],
+       StyleBox["21", {FontFamily -> "Times"}, StripOnInput -> False]],
+      Annotation[#, 
+       Style[21, {FontFamily -> "Times"}], 
+       "Tooltip"]& ]}, {}, {}}, {{}, {}, {}, {}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{False, False},
+  AxesLabel->{None, None},
+  AxesOrigin->{19.88, 0},
+  Frame->True,
+  FrameLabel->{{
+     FormBox[
+      TagBox["\"Counts\"", HoldForm], TraditionalForm], None}, {
+     FormBox[
+      TagBox["\"Temperature (C)\"", HoldForm], TraditionalForm], None}},
+  FrameStyle->Automatic,
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{{0}, {0}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  LabelStyle->{FontFamily -> "Times"},
+  PlotRange->{{20., 26.}, {All, All}},
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {None, 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.9101062835730877`*^9, {3.910106517187476*^9, 3.91010657542909*^9}, 
+   3.910550344986561*^9},
+ CellLabel->
+  "Out[239]=",ExpressionUUID->"81ad43b9-7725-4fc0-a47f-9bb98779f7e3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Extractants", "Subsection",
+ CellChangeTimes->{{3.910107836253881*^9, 
+  3.91010784165246*^9}},ExpressionUUID->"1a323cb5-4ea7-42d6-9b31-\
+eb943a5d42e4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lookupExtractant", "[", 
+   RowBox[{"f_", "?", "FileExistsQ"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"Lookup", "[", 
+         RowBox[{"#", ",", "\"\<identity\>\"", ",", "Nothing"}], "]"}], "&"}],
+        "/@", 
+       RowBox[{"Lookup", "[", 
+        RowBox[{"#", ",", "\"\<extractants\>\"", ",", "Nothing"}], "]"}]}], 
+      "&"}], "@", 
+     RowBox[{"Lookup", "[", 
+      RowBox[{"#", ",", "\"\<organic phase\>\"", ",", "Nothing"}], "]"}]}], 
+    "&"}], "@", 
+   RowBox[{"Import", "[", 
+    RowBox[{"f", ",", "\"\<RawJSON\>\""}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.910106589981531*^9, 3.910106604289689*^9}, {
+  3.910106636963024*^9, 3.910106658786317*^9}, {3.910106689500657*^9, 
+  3.91010671223297*^9}},
+ CellLabel->
+  "In[240]:=",ExpressionUUID->"b4d355b9-13a4-4239-a760-f3b239d937b3"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ex", "=", 
+   RowBox[{"FileSystemMap", "[", 
+    RowBox[{"lookupExtractant", ",", "\"\<.\>\"", ",", 
+     RowBox[{"FileNameForms", "->", "\"\<ST*.json\>\""}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.910106663518813*^9, 3.910106678353684*^9}},
+ CellLabel->
+  "In[241]:=",ExpressionUUID->"ae29e1ad-0a51-4872-8105-9b32753bcb6f"],
+
+Cell["How many unique (organic-soluble) extractants are present?", "Text",
+ CellChangeTimes->{{3.9101077700589533`*^9, 3.910107780662564*^9}, {
+  3.910107914813158*^9, 
+  3.910107925487714*^9}},ExpressionUUID->"eee32019-019a-408a-8126-\
+d746df8fba3b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "@", 
+  RowBox[{"DeleteDuplicates", "@", 
+   RowBox[{"Flatten", "@", 
+    RowBox[{"Values", "@", "ex"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.910107873989736*^9, 3.910107908046205*^9}},
+ CellLabel->
+  "In[242]:=",ExpressionUUID->"9af61554-7af1-49be-9b4a-9aa48913b506"],
+
+Cell[BoxData["68"], "Output",
+ CellChangeTimes->{{3.910107874257505*^9, 3.910107908249741*^9}, 
+   3.910550345346469*^9},
+ CellLabel->
+  "Out[242]=",ExpressionUUID->"b8076b09-9c7a-418b-b756-a6116c481a90"]
+}, Open  ]],
+
+Cell["How often are they present (how many experiments?)", "Text",
+ CellChangeTimes->{{3.910107928108667*^9, 
+  3.910107956669108*^9}},ExpressionUUID->"57f941dd-0986-4aee-9ced-\
+df909cbeff50"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TableForm", "[", "\[IndentingNewLine]", 
+  RowBox[{"List", "@@@", 
+   RowBox[{"Normal", "@", 
+    RowBox[{"ReverseSort", "@", 
+     RowBox[{"Counts", "@", 
+      RowBox[{"Flatten", "@", 
+       RowBox[{"Values", "@", "ex"}]}]}]}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.910106680708254*^9, 3.910106680883664*^9}, {
+  3.910106757624303*^9, 3.910106770013586*^9}, {3.910107355886684*^9, 
+  3.910107356629595*^9}, {3.910107593927739*^9, 3.910107676181903*^9}, {
+  3.910107862690692*^9, 3.910107870060109*^9}},
+ CellLabel->
+  "In[243]:=",ExpressionUUID->"beea7e66-3bb8-4aad-ad2d-e4ac746693eb"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"TODGA\"\>", "195"},
+    {"\<\"tBu-CyMe4-BTBP\"\>", "32"},
+    {"\<\"CyMe4-BTTP\"\>", "29"},
+    {"\<\"2-bromodecanoic acid\"\>", "25"},
+    {"\<\"T8-PHEN-TAM\"\>", "20"},
+    {"\<\"T8-PHEN-CAM\"\>", "19"},
+    {"\<\"MeCyMe4-BTBP\"\>", "16"},
+    {"\<\"TWE-18\"\>", "16"},
+    {"\<\"Br-Cosan\"\>", "15"},
+    {"\<\"CA-BTBP\"\>", "14"},
+    {"\<\"N-DP(DOM)P\"\>", "12"},
+    {"\<\"DMDOHEMA\"\>", "12"},
+    {"\<\"3-Me-N-DPP\"\>", "10"},
+    {"\<\"3,5-diMe-N-DPPz\"\>", "9"},
+    {"\<\"CA-BTP\"\>", "8"},
+    {"\<\"CyMe4-hemi-BTBP\"\>", "8"},
+    {"\<\"TWE-36\"\>", "6"},
+    {"\<\"TWE-35\"\>", "6"},
+    {"\<\"TWE-34\"\>", "6"},
+    {"\<\"TWE-33\"\>", "6"},
+    {"\<\"TWE-30\"\>", "6"},
+    {"\<\"TWE-29\"\>", "6"},
+    {"\<\"TWE-28\"\>", "6"},
+    {"\<\"TWE-27\"\>", "6"},
+    {"\<\"TWE-24\"\>", "6"},
+    {"\<\"TWE-23\"\>", "6"},
+    {"\<\"3-Me-N-DP(DOM)P\"\>", "6"},
+    {"\<\"TWE-22\"\>", "6"},
+    {"\<\"TWE-21\"\>", "6"},
+    {"\<\"Cy5S-Me4-BTBP\"\>", "6"},
+    {"\<\"CyMe4-BTPhen\"\>", "6"},
+    {"\<\"2PQM\"\>", "6"},
+    {"\<\"3,5-diMe-N-DPP\"\>", "6"},
+    {"\<\"TWE-17\"\>", "6"},
+    {"\<\"TWE-15\"\>", "6"},
+    {"\<\"TWE-14\"\>", "6"},
+    {"\<\"TWE-11\"\>", "6"},
+    {"\<\"2-bromohexanoic acid\"\>", "6"},
+    {"\<\"TWE-20\"\>", "5"},
+    {"\<\"EsPyTri\"\>", "5"},
+    {"\<\"CyMe4-BTBP\"\>", "5"},
+    {"\<\"Cy5-S-Me4-BTBP\"\>", "5"},
+    {"\<\"Cy5-O-Me4-BTBP\"\>", "5"},
+    {"\<\"N-DPP\"\>", "5"},
+    {"\<\"TWE-19\"\>", "4"},
+    {"\<\"T8-THP-TAM\"\>", "4"},
+    {"\<\"T8-THP-CAM\"\>", "4"},
+    {"\<\"CHELI2\"\>", "3"},
+    {"\<\"NOMPIC\"\>", "2"},
+    {"\<\"NDMPIC\"\>", "2"},
+    {"\<\"TWE-16\"\>", "2"},
+    {"\<\"TWE-10\"\>", "2"},
+    {"\<\"TWE-9\"\>", "2"},
+    {"\<\"TWE-8\"\>", "2"},
+    {"\<\"TWE-7\"\>", "2"},
+    {"\<\"TWE-6\"\>", "2"},
+    {"\<\"TWE-2\"\>", "2"},
+    {"\<\"TWE-1\"\>", "2"},
+    {"\<\"3-Me-N-DPPz\"\>", "1"},
+    {"\<\"PPPA\"\>", "1"},
+    {"\<\"PPA\"\>", "1"},
+    {"\<\"TBADIPIC\"\>", "1"},
+    {"\<\"OPYR\"\>", "1"},
+    {"\<\"NOCPIC\"\>", "1"},
+    {"\<\"NDDIPIC\"\>", "1"},
+    {"\<\"CHELI1\"\>", "1"},
+    {"\<\"2DOQA\"\>", "1"},
+    {"\<\"TBAPYR\"\>", "1"}
+   },
+   GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
+   GridBoxSpacings->{"Columns" -> {
+       Offset[0.27999999999999997`], {
+        Offset[2.0999999999999996`]}, 
+       Offset[0.27999999999999997`]}, "Rows" -> {
+       Offset[0.2], {
+        Offset[0.4]}, 
+       Offset[0.2]}}],
+  Function[BoxForm`e$, 
+   TableForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{
+  3.910106681194684*^9, 3.910106718797221*^9, {3.910106760550947*^9, 
+   3.910106770723195*^9}, {3.910107200208497*^9, 3.910107205675462*^9}, {
+   3.9101073412373257`*^9, 3.910107357298778*^9}, {3.910107595304338*^9, 
+   3.910107676426431*^9}, 3.910550345382622*^9},
+ CellLabel->
+  "Out[243]//TableForm=",ExpressionUUID->"c3918f80-d65f-449c-be2e-\
+8cbc6bfa5e6a"]
+}, Open  ]],
+
+Cell["\<\
+How many times do we have a single extractant or multiple extractants or an \
+extractant plus phase modifier?\
+\>", "Text",
+ CellChangeTimes->{{3.910107791635858*^9, 3.910107801577653*^9}, {
+  3.910107973703915*^9, 
+  3.910107981713416*^9}},ExpressionUUID->"36e79582-8b9d-4f7f-8ad1-\
+4c843eff97da"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "@", 
+  RowBox[{
+   RowBox[{"ResourceFunction", "[", "\"\<Proportions\>\"", "]"}], "@", 
+   RowBox[{"Flatten", "@", 
+    RowBox[{"Values", "@", 
+     RowBox[{"Map", "[", 
+      RowBox[{"Length", ",", "ex", ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}]}]}]}]], "Input",
+ CellChangeTimes->{{3.910107692203446*^9, 3.9101077598670273`*^9}},
+ CellLabel->
+  "In[244]:=",ExpressionUUID->"c5f1d689-ae3e-4377-a00f-a8d881aab581"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"1", "\[Rule]", "0.8487544483985765`"}], ",", 
+   RowBox[{"2", "\[Rule]", "0.1512455516014235`"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{{3.910107692824346*^9, 3.910107760092307*^9}, 
+   3.910550345484713*^9},
+ CellLabel->
+  "Out[244]=",ExpressionUUID->"1213cd8a-9d8d-40b1-b833-1baee0a364d3"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Holdback agents", "Subsection",
+ CellChangeTimes->{{3.9101079868182077`*^9, 
+  3.91010798836307*^9}},ExpressionUUID->"8401d3af-75c7-437a-8c76-\
+faa3cfeee46a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"lookupAqueousSolutes", "[", 
+    RowBox[{"f_", "?", "FileExistsQ"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Lookup", "[", 
+          RowBox[{"#", ",", "\"\<identity\>\"", ",", "Nothing"}], "]"}], 
+         "&"}], "/@", 
+        RowBox[{"Lookup", "[", 
+         RowBox[{"#", ",", "\"\<solutes\>\"", ",", "Nothing"}], "]"}]}], 
+       "&"}], "@", 
+      RowBox[{"Lookup", "[", 
+       RowBox[{"#", ",", "\"\<aqueous phase\>\"", ",", "Nothing"}], "]"}]}], 
+     "&"}], "@", 
+    RowBox[{"Import", "[", 
+     RowBox[{"f", ",", "\"\<RawJSON\>\""}], "]"}]}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hb", "=", 
+   RowBox[{
+    RowBox[{"FileSystemMap", "[", 
+     RowBox[{"lookupAqueousSolutes", ",", "\"\<.\>\"", ",", 
+      RowBox[{"FileNameForms", "->", "\"\<ST*.json\>\""}]}], "]"}], "/.", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<NH4NO3\>\"", "->", "Nothing"}], ",", 
+      RowBox[{"\"\<HNO3\>\"", "->", "Nothing"}], ",", 
+      RowBox[{"\"\<LiNO3\>\"", "->", "Nothing"}]}], "}"}]}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.910107990001446*^9, 3.910108084193153*^9}, {
+  3.910108117917141*^9, 3.910108139469987*^9}, {3.91010817093017*^9, 
+  3.9101081898026037`*^9}},
+ CellLabel->
+  "In[245]:=",ExpressionUUID->"f3b77470-852f-4d0a-a8ea-a1953a95c2c3"],
+
+Cell["\<\
+70% of the reported entries have no aqueous holdback agent; other cases \
+contain only one holdback agent.
+
+Idea:  We could \
+\>", "Text",
+ CellChangeTimes->{{3.910108279401229*^9, 3.910108326004811*^9}, {
+  3.910113877691485*^9, 
+  3.910113884900197*^9}},ExpressionUUID->"f909bcf5-5eed-4e27-8347-\
+bbd3c906eac6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "@", 
+  RowBox[{"ReverseSort", "@", 
+   RowBox[{
+    RowBox[{"ResourceFunction", "[", "\"\<Proportions\>\"", "]"}], "@", 
+    RowBox[{"Flatten", "[", 
+     RowBox[{
+      RowBox[{"Values", "[", "hb", "]"}], ",", "1"}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.910108161301156*^9, 3.91010816373716*^9}, {
+  3.910108196094924*^9, 3.910108265815514*^9}},
+ CellLabel->
+  "In[247]:=",ExpressionUUID->"fbde6c8f-9c36-4618-9588-4f2cfba53b93"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", "}"}], "\[Rule]", "0.7064056939501779`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"PyTri-Tetraol\"\>", "}"}], "\[Rule]", 
+    "0.02491103202846975`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-40\"\>", "}"}], "\[Rule]", "0.02491103202846975`"}],
+    ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"SO3-Ph-BTBP\"\>", "}"}], "\[Rule]", 
+    "0.021352313167259787`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"SO3-Ph-BTP\"\>", "}"}], "\[Rule]", 
+    "0.017793594306049824`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"PHEN-6OH\"\>", "}"}], "\[Rule]", 
+    "0.017793594306049824`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-42\"\>", "}"}], "\[Rule]", 
+    "0.017793594306049824`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-41\"\>", "}"}], "\[Rule]", 
+    "0.017793594306049824`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-38\"\>", "}"}], "\[Rule]", 
+    "0.014234875444839857`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-37\"\>", "}"}], "\[Rule]", 
+    "0.014234875444839857`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"PHEN-dialcohol\"\>", "}"}], "\[Rule]", 
+    "0.014234875444839857`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-31\"\>", "}"}], "\[Rule]", 
+    "0.014234875444839857`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-26\"\>", "}"}], "\[Rule]", 
+    "0.014234875444839857`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"(PhSO3Na)2-BTPhen\"\>", "}"}], "\[Rule]", 
+    "0.014234875444839857`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"(PhSO3Na)2-BTBP\"\>", "}"}], "\[Rule]", 
+    "0.014234875444839857`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"CITAM\"\>", "}"}], "\[Rule]", "0.010676156583629894`"}],
+    ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"Phen-dialcohol\"\>", "}"}], "\[Rule]", 
+    "0.010676156583629894`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"PyTri-diol\"\>", "}"}], "\[Rule]", 
+    "0.010676156583629894`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-32\"\>", "}"}], "\[Rule]", 
+    "0.0071174377224199285`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"TWE-39\"\>", "}"}], "\[Rule]", 
+    "0.0071174377224199285`"}], ",", 
+   RowBox[{
+    RowBox[{"{", "\<\"Phen-6OH\"\>", "}"}], "\[Rule]", 
+    "0.005338078291814947`"}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{{3.910108143545864*^9, 3.910108266468224*^9}, 
+   3.910550345988679*^9},
+ CellLabel->
+  "Out[247]=",ExpressionUUID->"39ed86e7-1f85-4b31-a9ed-0b91c57d91e0"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Solvents", "Subsection",
+ CellChangeTimes->{{3.910108827890608*^9, 
+  3.910108829991376*^9}},ExpressionUUID->"961e0182-7073-4320-acab-\
+6892e27fd332"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lookupSolvents", "[", 
+   RowBox[{"f_", "?", "FileExistsQ"}], "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"Lookup", "[", 
+       RowBox[{"#", ",", "\"\<solvents\>\"", ",", "Nothing"}], "]"}], "&"}], 
+     "@", 
+     RowBox[{"Lookup", "[", 
+      RowBox[{"#", ",", "\"\<organic phase\>\"", ",", "Nothing"}], "]"}]}], 
+    "&"}], "@", 
+   RowBox[{"Import", "[", 
+    RowBox[{"f", ",", "\"\<RawJSON\>\""}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.910108832495497*^9, 3.910108858924862*^9}},
+ CellLabel->
+  "In[248]:=",ExpressionUUID->"ecde2fd3-5df4-4c06-9a91-1e65c8d36551"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"solv", "=", 
+   RowBox[{"FileSystemMap", "[", 
+    RowBox[{"lookupSolvents", ",", "\"\<.\>\"", ",", 
+     RowBox[{"FileNameForms", "->", "\"\<ST*.json\>\""}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.9101088628757257`*^9, 3.9101090000479937`*^9}, {
+  3.910109034248596*^9, 3.910109076211196*^9}},
+ CellLabel->
+  "In[249]:=",ExpressionUUID->"b5d831c4-60ae-4b5b-b193-860695d08c18"],
+
+Cell["How many have one solvent versus two solvents?", "Text",
+ CellChangeTimes->{{3.910109080220346*^9, 
+  3.910109086458911*^9}},ExpressionUUID->"7254c723-1674-4015-92f7-\
+93205b7af810"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "@", 
+  RowBox[{
+   RowBox[{"ResourceFunction", "[", "\"\<Proportions\>\"", "]"}], "@", 
+   RowBox[{"Flatten", "@", 
+    RowBox[{"Values", "@", 
+     RowBox[{"Map", "[", 
+      RowBox[{"Length", ",", "solv", ",", 
+       RowBox[{"{", "2", "}"}]}], "]"}]}]}]}]}]], "Input",
+ CellLabel->
+  "In[250]:=",ExpressionUUID->"cbc4bf30-5932-456d-869f-f4e6afcecda0"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"2", "\[Rule]", "0.3683274021352313`"}], ",", 
+   RowBox[{"1", "\[Rule]", "0.6316725978647687`"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.910109088523459*^9, 3.910550346449421*^9},
+ CellLabel->
+  "Out[250]=",ExpressionUUID->"e1d512a5-3460-4ce1-b8bf-28e4048cf3a6"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Tabularize the Data", "Section",
+ CellChangeTimes->{{3.91011374929952*^9, 
+  3.910113751634055*^9}},ExpressionUUID->"5cea6509-7105-429a-aa65-\
+0269f1289537"],
+
+Cell["What are our preliminary desiderata?  ", "Text",
+ CellChangeTimes->{{3.91011375402608*^9, 
+  3.9101137627096176`*^9}},ExpressionUUID->"144f6606-3316-4574-ab06-\
+7ead83e3ceb1"],
+
+Cell["Extractant identity --> fingerprints and descriptors", "Item",
+ CellChangeTimes->{{3.910113858302184*^9, 3.9101138603167977`*^9}, {
+  3.9101179203787937`*^9, 
+  3.91011792620665*^9}},ExpressionUUID->"70da48ba-04d3-4fd1-aef6-\
+93abb17ea69d"],
+
+Cell["Solvent-->some type of featurization?", "Item",
+ CellChangeTimes->{{3.910113858302184*^9, 3.9101138603167977`*^9}, {
+  3.9101179203787937`*^9, 
+  3.910117936928595*^9}},ExpressionUUID->"f45c30ae-79c9-4a66-b7ca-\
+c2fb96f8b727"],
+
+Cell["Metal (only two, so no need for fancy descriptors)", "Item",
+ CellChangeTimes->{{3.910113858302184*^9, 3.9101138603167977`*^9}, {
+  3.9101179203787937`*^9, 
+  3.9101179606945257`*^9}},ExpressionUUID->"f3a719c9-8b97-4f46-8b86-\
+a3b92fba89f3"],
+
+Cell["D value", "Item",
+ CellChangeTimes->{{3.910113858302184*^9, 3.9101138603167977`*^9}, {
+  3.9101179203787937`*^9, 
+  3.910117967158299*^9}},ExpressionUUID->"9804355a-b039-49f8-b27f-\
+5f6af1d1561f"],
+
+Cell["pH?", "Item",
+ CellChangeTimes->{{3.910113858302184*^9, 3.9101138603167977`*^9}, {
+  3.9101179203787937`*^9, 
+  3.910117968867075*^9}},ExpressionUUID->"30512b73-2978-45df-ad5d-\
+3fdf4d803f84"],
+
+Cell["Temperature?", "Item",
+ CellChangeTimes->{{3.910113858302184*^9, 3.9101138603167977`*^9}, {
+  3.9101179203787937`*^9, 
+  3.910117970654585*^9}},ExpressionUUID->"d597de6e-7b3e-4a32-8ead-\
+5866e80f14c9"],
+
+Cell[CellGroupData[{
+
+Cell["Time?", "Item",
+ CellChangeTimes->{{3.910113858302184*^9, 3.9101138603167977`*^9}, {
+  3.9101179203787937`*^9, 
+  3.910117971714324*^9}},ExpressionUUID->"571f0266-2882-4da8-b2ef-\
+91036e854be4"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "create", " ", "a", " ", "dictionary", " ", "of", " ", "each", " ", 
+    "chemical", " ", "name", " ", "to", " ", "its", " ", "corresponding", " ",
+     "SMILES"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"chemRecord", "[", "entry_Association", "]"}], ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Association", "@", 
+     RowBox[{"Thread", "[", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"entry", "[", "\"\<names\>\"", "]"}], " ", "->", "  ", 
+        RowBox[{"entry", "[", "\"\<SMILES\>\"", "]"}]}], ")"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"chemRecord", "[", "d_List", "]"}], ":=", 
+    RowBox[{"Join", "@@", 
+     RowBox[{"chemRecord", "/@", "d"}]}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "define", " ", "a", " ", "chemical", " ", "records", " ", "to", " ", "be",
+      " ", "used", " ", "later"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"chemicals", " ", "=", " ", 
+     RowBox[{"chemRecord", "@", 
+      RowBox[{"Import", "[", 
+       RowBox[{"\"\<chemical_record.json\>\"", ",", "\"\<RawJSON\>\""}], 
+       "]"}]}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.910171774015847*^9, 3.910171815235435*^9}, {
+  3.910171945080099*^9, 3.910171953480042*^9}, {3.910172004306578*^9, 
+  3.91017200849554*^9}, {3.9101721167229633`*^9, 3.91017213273157*^9}, {
+  3.910172189831284*^9, 3.910172194906316*^9}, {3.910172999063938*^9, 
+  3.910173060427627*^9}, {3.910181068388469*^9, 3.910181075429338*^9}, {
+  3.910187125877567*^9, 3.910187141207723*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"3b6f15f5-cfcd-4d61-9f54-1dd33dbc02f8"],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"molarity", "[", "c_Association", "]"}], ":=", 
+    RowBox[{"N", "@", 
+     RowBox[{"QuantityMagnitude", "@", 
+      RowBox[{"toMolarity", "@", 
+       RowBox[{"parseQuantity", "[", "c", "]"}]}]}]}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"molarity", "[", 
+     RowBox[{"_", "?", "MissingQ"}], "]"}], ":=", 
+    RowBox[{"Missing", "[", "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"chemicalInfo", "[", "chemicals_Association", "]"}], "[", 
+     RowBox[{"{", "}"}], "]"}], ":=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Missing", "[", "]"}], ",", "0."}], "}"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"chemicalInfo", "[", "chemicals_Association", "]"}], "[", 
+     "species_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"smiles", "=", 
+         RowBox[{"Lookup", "[", 
+          RowBox[{"chemicals", ",", " ", 
+           RowBox[{"species", "[", "\"\<identity\>\"", "]"}]}], "]"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"conc", " ", "=", " ", 
+         RowBox[{"molarity", "@", 
+          RowBox[{"species", "[", "\"\<concentration\>\"", "]"}]}]}]}], "}"}],
+       ",", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"smiles", ",", "conc"}], "}"}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"extractants", "[", "chem_Association", "]"}], "[", 
+     "r_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"l", "=", 
+        RowBox[{
+         RowBox[{"Query", "[", 
+          RowBox[{
+          "\"\<organic phase\>\"", ",", "\"\<extractants\>\"", ",", "All", 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\<identity\>\"", ",", "\"\<concentration\>\""}], 
+            "}"}]}], "]"}], "@", "r"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Flatten", "@", 
+         RowBox[{"Take", "[", 
+          RowBox[{"#", ",", "2"}], "]"}]}], "&"}], "@", 
+       RowBox[{
+        RowBox[{"Append", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Missing", "[", "]"}], ",", "0."}], "}"}], "]"}], "@", 
+        RowBox[{
+         RowBox[{"ReverseSortBy", "[", "Last", "]"}], "@", 
+         RowBox[{
+          RowBox[{"Map", "[", 
+           RowBox[{"chemicalInfo", "[", "chem", "]"}], "]"}], "@", 
+          "l"}]}]}]}]}], "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"temperature", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"t", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Query", "[", 
+          RowBox[{"\"\<reaction conditions\>\"", ",", "\"\<temperature\>\""}],
+           "]"}], "@", "r"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"MissingQ", "[", "t", "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Missing", "[", "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"QuantityMagnitude", "@", 
+           RowBox[{"UnitConvert", "[", 
+            RowBox[{"#", ",", "\"\<DegreesCelsius\>\""}], "]"}]}], "&"}], "@",
+          " ", 
+         RowBox[{"parseQuantity", "@", "t"}]}]}], "]"}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"time", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"t", "=", 
+        RowBox[{
+         RowBox[{"Query", "[", 
+          RowBox[{"\"\<reaction conditions\>\"", ",", "\"\<time\>\""}], "]"}],
+          "@", "r"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"MissingQ", "[", "t", "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"Missing", "[", "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"QuantityMagnitude", "@", 
+           RowBox[{"UnitConvert", "[", 
+            RowBox[{"#", ",", "\"\<Minutes\>\""}], "]"}]}], "&"}], "@", 
+         RowBox[{"parseQuantity", "@", "t"}]}]}], "]"}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "these", " ", "are", " ", "the", " ", "only", " ", "nitrate", " ", 
+     "salts", " ", "in", " ", "ACSEPT"}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Clear", "[", "nitrateConc", "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", 
+     RowBox[{"\"\<KNO3\>\"", ",", 
+      RowBox[{"c_", "?", "NumericQ"}]}], "]"}], ":=", "c"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", 
+     RowBox[{"\"\<NH4NO3\>\"", ",", 
+      RowBox[{"c_", "?", "NumericQ"}]}], "]"}], ":=", "c"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", 
+     RowBox[{"\"\<HNO3\>\"", ",", 
+      RowBox[{"c_", "?", "NumericQ"}]}], "]"}], ":=", "c"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", 
+     RowBox[{"\"\<LiNO3\>\"", ",", 
+      RowBox[{"c_", "?", "NumericQ"}]}], "]"}], ":=", "c"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", 
+     RowBox[{"_", ",", "c_"}], "]"}], ":=", "0"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", 
+     RowBox[{"_", ",", 
+      RowBox[{"_", "?", "MissingQ"}]}], "]"}], ":=", "0."}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", 
+     RowBox[{"_", "?", "MissingQ"}], "]"}], ":=", "0."}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", 
+     RowBox[{"_", ",", "_String"}], "]"}], ":=", "0."}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"nitrateConc", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"solutes", "=", 
+         RowBox[{
+          RowBox[{"Query", "[", 
+           RowBox[{"\"\<aqueous phase\>\"", ",", "\"\<solutes\>\""}], "]"}], 
+          "@", "r"}]}], ",", "\[IndentingNewLine]", " ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "only", " ", "nitric", " ", "acid", " ", "is", " ", "used"}], ";", 
+           " ", 
+           RowBox[{
+           "if", " ", "pH", " ", "is", " ", "specified", " ", "but", " ", 
+            "not", " ", "HNO3", " ", "concentration"}]}], ",", " ", 
+          RowBox[{
+           RowBox[{
+           "then", " ", "infer", " ", "nitrate", " ", "contribution"}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+           "this", " ", "is", " ", "the", " ", "case", " ", "for", " ", 
+            "ST106"}], ";", " ", 
+           RowBox[{"otherwise", " ", "return", " ", "zero"}]}], ",", " ", 
+          RowBox[{
+          "as", " ", "this", " ", "will", " ", "be", " ", "captured", " ", 
+           "in", " ", "the", " ", "explicit", " ", "nitrate", " ", 
+           "species"}]}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{"nitrateFromAcid", " ", "=", " ", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"pHQ", "[", "r", "]"}], "&&", 
+            RowBox[{"!", 
+             RowBox[{"acidQ", "[", "r", "]"}]}]}], ",", 
+           RowBox[{"acidConc", "[", "r", "]"}], " ", ",", "0"}], "]"}]}]}], 
+       "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"nitrateFromAcid", "+", 
+       RowBox[{"Total", "@", 
+        RowBox[{
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{"nitrateConc", "[", 
+            RowBox[{
+             RowBox[{"#", "[", "\"\<identity\>\"", "]"}], ",", " ", 
+             RowBox[{"molarity", "@", 
+              RowBox[{"#", "[", "\"\<concentration\>\"", "]"}]}]}], "]"}], 
+           "&"}], "]"}], "@", "solutes"}]}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "query", " ", "if", " ", "pH", " ", "or", " ", "acid", " ", 
+     "concentration", " ", "information", " ", "is", " ", "present"}], "*)"}],
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"pHQuery", " ", "=", " ", 
+     RowBox[{"Query", "[", 
+      RowBox[{"\"\<aqueous phase\>\"", ",", "\"\<pH\>\""}], "]"}]}], ";"}], 
+   " ", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"acidQuery", " ", "=", " ", 
+     RowBox[{"Query", "[", 
+      RowBox[{"\"\<aqueous phase\>\"", ",", "\"\<solutes\>\"", ",", 
+       RowBox[{"SelectFirst", "[", 
+        RowBox[{
+         RowBox[{"#identity", " ", "==", " ", "\"\<HNO3\>\""}], "&"}], 
+        "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"holdbackAgentQuery", "=", 
+     RowBox[{"Query", "[", 
+      RowBox[{
+      "\"\<aqueous phase\>\"", ",", "\"\<solutes\>\"", ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Select", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"FreeQ", "[", 
+           RowBox[{"#", "[", "\"\<identity\>\"", "]"}], "]"}], "@", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<KNO3\>\"", ",", "\"\<NH4NO3\>\"", ",", "\"\<HNO3\>\"", ",", 
+            "\"\<LiNO3\>\""}], "}"}]}], "&"}], "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"holdbackAgent", "[", "chemicals_Association", "]"}], "[", 
+     "r_Association", "]"}], ":=", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"chemicalInfo", "[", "chemicals", "]"}], "@", 
+       RowBox[{"First", "[", 
+        RowBox[{"#", ",", 
+         RowBox[{"{", "}"}]}], "]"}]}], "&"}], "@", 
+     RowBox[{"holdbackAgentQuery", "[", "r", "]"}]}]}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"pHQ", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"Not", "@", 
+     RowBox[{"MissingQ", "@", 
+      RowBox[{"pHQuery", "@", "r"}]}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"acidQ", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"Not", "@", 
+     RowBox[{"MissingQ", "@", 
+      RowBox[{
+       RowBox[{"Query", "[", "\"\<concentration\>\"", "]"}], "@", 
+       RowBox[{"acidQuery", "@", "r"}]}]}]}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "return", " ", "a", " ", "molar", " ", "concentration", " ", "depending",
+       " ", "on", " ", "what", " ", "info", " ", "is", " ", "present"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+     "stated", " ", "initial", " ", "pH", " ", "takes", " ", "precedent"}]}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"acidConc", "[", 
+     RowBox[{"r_", "?", "pHQ"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"N", "@", "10"}], "^", 
+       RowBox[{"(", 
+        RowBox[{"-", "#"}], ")"}]}], "&"}], "@", " ", 
+     RowBox[{"pHQuery", "@", "r"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"acidConc", "[", 
+     RowBox[{"r_", "?", "acidQ"}], "]"}], ":=", 
+    RowBox[{"N", "@", " ", 
+     RowBox[{"molarity", "@", 
+      RowBox[{
+       RowBox[{"Query", "[", "\"\<concentration\>\"", "]"}], "@", 
+       RowBox[{"acidQuery", "@", "r"}]}]}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"acidConc", "[", "_", "]"}], ":=", 
+    RowBox[{"Missing", "[", "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{
+     "ACSEPT", " ", "is", " ", "reported", " ", "entirely", " ", "as", " ", 
+      "D", " ", 
+      RowBox[{"(", 
+       RowBox[{"not", " ", "logD"}], ")"}]}], ",", " ", 
+     RowBox[{
+     "so", " ", "we", " ", "need", " ", "only", " ", "look", " ", "this", " ",
+       "up", " ", "and", " ", "convert"}]}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"process", " ", "each", " ", "entry"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Clear", "[", "logD", "]"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"logD", "[", 
+     RowBox[{"{", 
+      RowBox[{"element_String", ",", 
+       RowBox[{"d_", "?", "PossibleZeroQ"}]}], "}"}], "]"}], ":=", 
+    RowBox[{"logD", "[", 
+     RowBox[{"{", 
+      RowBox[{"element", ",", 
+       RowBox[{"10", "^", 
+        RowBox[{"-", "4."}]}]}], "}"}], "]"}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"logD", "[", 
+     RowBox[{"{", 
+      RowBox[{"element_String", ",", 
+       RowBox[{"d_", "?", "NumericQ"}]}], "}"}], "]"}], ":=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"removeOxidation", "[", "element", "]"}], ",", 
+      RowBox[{"Log", "[", 
+       RowBox[{"10.", ",", "d"}], "]"}]}], "}"}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"logD", "[", 
+     RowBox[{"{", 
+      RowBox[{"element_", ",", 
+       RowBox[{"d_", "?", "MissingQ"}]}], "}"}], "]"}], ":=", "Nothing"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"process", " ", "a", " ", "record"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"logD", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"logD", "/@", 
+     RowBox[{"Values", "/@", 
+      RowBox[{
+       RowBox[{"Query", "[", 
+        RowBox[{"\"\<metals\>\"", ",", "All", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<identity\>\"", ",", "\"\<D\>\""}], "}"}]}], "]"}], "@",
+        "r"}]}]}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "clean", " ", "up", " ", "formatting", " ", "to", " ", "constant", " ", 
+      "lower"}], "-", 
+     RowBox[{
+     "case", " ", "and", " ", "remove", " ", "TPH", " ", "fraction", " ", 
+      "information"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"formatSolvents", "[", "s_String", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"StringReplace", "[", 
+      RowBox[{
+       RowBox[{"\"\<tph \>\"", "~~", "___"}], "->", "\"\<tph\>\""}], "]"}], 
+     "@", 
+     RowBox[{"ToLowerCase", "@", "s"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"formatSolvents", "[", "s_", "]"}], ":=", "s"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"SetAttributes", "[", 
+    RowBox[{"formatSolvents", ",", "Listable"}], "]"}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"write", " ", "this", " ", "as", " ", 
+     RowBox[{"major", "/", " ", "minor"}], " ", "components", " ", "and", " ",
+      "mole", " ", "fraction"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "there", " ", "are", " ", "only", " ", "two", " ", "solvents", " ", 
+      RowBox[{"(", 
+       RowBox[{"at", " ", "most"}], ")"}]}], ";", " ", 
+     RowBox[{
+     "so", " ", "tabularize", " ", "by", " ", "adding", " ", "a", " ", 
+      "blank", " ", "entry", " ", "if", " ", "needed"}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"solvents", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"l", "=", 
+        RowBox[{
+         RowBox[{"Query", "[", 
+          RowBox[{
+          "\"\<organic phase\>\"", ",", "\"\<solvents\>\"", ",", "All", ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\<identity\>\"", ",", "\"\<volfraction\>\""}], "}"}]}],
+           "]"}], "@", "r"}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"formatSolvents", "@", 
+         RowBox[{"Flatten", "@", 
+          RowBox[{"Take", "[", 
+           RowBox[{"#", ",", "2"}], "]"}]}]}], "&"}], "@", 
+       RowBox[{
+        RowBox[{"Append", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Missing", "[", "]"}], ",", "0."}], "}"}], "]"}], "@", 
+        RowBox[{
+         RowBox[{"ReverseSortBy", "[", "Last", "]"}], "@", 
+         RowBox[{"Values", "@", "l"}]}]}]}]}], "]"}]}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "we", " ", "will", " ", "want", " ", "to", " ", "exclude", " ", "records",
+      " ", "that", " ", "contain", " ", "multiple", " ", "extractants", " ", 
+     "or", " ", "holdback", " ", "agents"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"containsHoldBackAgentQ", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"aqSolutes", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Query", "[", 
+          RowBox[{
+          "\"\<aqueous phase\>\"", ",", "\"\<solutes\>\"", ",", "All", ",", 
+           "\"\<identity\>\""}], "]"}], "@", "r"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Not", "@", 
+       RowBox[{
+        RowBox[{"ContainsOnly", "[", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<KNO3\>\"", ",", "\"\<NH4NO3\>\"", ",", "\"\<HNO3\>\"", ",", 
+           "\"\<LiNO3\>\""}], "}"}], "]"}], "@", "aqSolutes"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"containsOneExtractantQ", "[", "r_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"extractants", " ", "=", " ", 
+        RowBox[{
+         RowBox[{"Query", "[", 
+          RowBox[{
+          "\"\<organic phase\>\"", ",", "\"\<extractants\>\"", ",", "All", 
+           ",", "\"\<identity\>\""}], "]"}], "@", "r"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"EqualTo", "[", "1", "]"}], "@", 
+       RowBox[{"Length", "@", "extractants"}]}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"onlyOneExtractantAndNoHoldbackQ", "[", "r_Association", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"containsOneExtractantQ", "[", "r", "]"}], "&&", 
+     RowBox[{"Not", "[", 
+      RowBox[{"containsHoldBackAgentQ", "[", "r", "]"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"Clear", "[", "tabularize", "]"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "you", " ", "could", " ", "put", " ", "a", " ", "pattern", " ", "on", 
+      " ", "the", " ", "r", " ", "argument", " ", "to", " ", "restrict", " ", 
+      "it", " ", "t", " ", "only", " ", "containing", " ", "one", " ", 
+      "extrantant", " ", "or", " ", "no", " ", "holdback", " ", "agent"}], 
+     ",", " ", 
+     RowBox[{"but", " ", 
+      RowBox[{"I", "'"}], "m", " ", "gonna", " ", "let", " ", "it", " ", 
+      "roll"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"tabularize", "[", "chemicals_Association", "]"}], "[", 
+     "r_Association", "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"observedDValues", "=", 
+         RowBox[{"logD", "[", "r", "]"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{"experimentalConditions", "=", 
+         RowBox[{"Flatten", "@", 
+          RowBox[{"Through", "[", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"extractants", "[", "chemicals", "]"}], ",", 
+              RowBox[{"holdbackAgent", "[", "chemicals", "]"}], ",", 
+              "\[IndentingNewLine]", "acidConc", ",", "nitrateConc", ",", 
+              "solvents", ",", "temperature", ",", "time"}], "}"}], "[", "r", 
+            "]"}], "]"}]}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"(*", 
+       RowBox[{
+       "return", " ", "each", " ", "D", " ", "and", " ", "its", " ", 
+        "conditions", " ", "as", " ", "rows"}], "*)"}], "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Join", "[", 
+         RowBox[{"experimentalConditions", ",", "#"}], "]"}], "&"}], "/@", 
+       "observedDValues"}]}], "]"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{"otherwise", " ", "drop", " ", "the", " ", "record"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"tabularize", "[", "chemicals_Association", "]"}], "[", 
+      "r_Association", "]"}], ":=", "Nothing"}], "\[IndentingNewLine]", 
+    "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "a", " ", "list", " ", "of", " ", "experimental", " ", "records", " ", 
+     "in", " ", "a", " ", "file"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"tabularize", "[", "chemicals_Association", "]"}], "[", "r_List",
+      "]"}], ":=", 
+    RowBox[{"Join", "@@", 
+     RowBox[{
+      RowBox[{"tabularize", "[", "chemicals", "]"}], "/@", "r"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"a", " ", "specific", " ", "file"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"tabularize", "[", "chemicals_Association", "]"}], "[", 
+     RowBox[{"f_", "?", "FileExistsQ"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"Prepend", "[", "f", "]"}], "/@", 
+     RowBox[{
+      RowBox[{"tabularize", "[", "chemicals", "]"}], "@", 
+      RowBox[{"Import", "[", 
+       RowBox[{"f", ",", "\"\<RawJSON\>\""}], "]"}]}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "all", " ", "files", " ", "matching", " ", "a", " ", "pattern", " ", "in",
+      " ", "the", " ", "current", " ", "directory"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"tabularize", "[", "chemicals_Association", "]"}], "[", 
+     RowBox[{"pattern_String", ":", "\"\<ST*.json\>\""}], "]"}], ":=", 
+    RowBox[{"Join", "@@", "\[IndentingNewLine]", 
+     RowBox[{"FileSystemMap", "[", 
+      RowBox[{
+       RowBox[{"tabularize", "[", "chemicals", "]"}], ",", "\"\<.\>\"", ",", 
+       RowBox[{"FileNameForms", "->", "pattern"}]}], "]"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"test", " ", 
+     RowBox[{"inclusion", "/", "exclusion"}], " ", "with", " ", "patterns"}], 
+    "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"(*", "\[IndentingNewLine]", 
+    RowBox[{"TestReport", "@", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"VerificationTest", "[", " ", 
+        RowBox[{
+         RowBox[{"Length", "@", 
+          RowBox[{
+           RowBox[{"tabularize", "[", "chemicals", "]"}], "[", 
+           "\"\<ST1.json\>\"", "]"}]}], ",", "4"}], "]"}], ",", " ", 
+       RowBox[{"(*", 
+        RowBox[{"simple", " ", "extraction"}], "*)"}], "\[IndentingNewLine]", 
+       
+       RowBox[{"VerificationTest", "[", " ", 
+        RowBox[{
+         RowBox[{"Length", "@", 
+          RowBox[{
+           RowBox[{"tabularize", "[", "chemicals", "]"}], "[", 
+           "\"\<ST25.json\>\"", "]"}]}], ",", "0"}], "]"}], ",", " ", 
+       RowBox[{"(*", 
+        RowBox[{
+        "two", " ", "extractants", " ", "should", " ", "be", " ", 
+         "excluded"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"VerificationTest", "[", " ", 
+        RowBox[{
+         RowBox[{"Length", "@", 
+          RowBox[{
+           RowBox[{"tabularize", "[", "chemicals", "]"}], "[", 
+           "\"\<ST100.json\>\"", "]"}]}], ",", "8"}], "]"}]}], " ", 
+      RowBox[{"(*", 
+       RowBox[{"extraction", " ", "with", " ", "holdback", " ", "agent"}], 
+       "*)"}], "\[IndentingNewLine]", "}"}]}], "\[IndentingNewLine]", 
+    "*)"}]}]}]], "Input",
+ CellChangeTimes->{{3.910172602248603*^9, 3.910172659229229*^9}, {
+   3.9101730790734787`*^9, 3.910173114692515*^9}, {3.910173157196534*^9, 
+   3.9101732854277577`*^9}, {3.910173334037249*^9, 3.9101737308060083`*^9}, {
+   3.9101737765370092`*^9, 3.910173804282281*^9}, {3.910173900208222*^9, 
+   3.910174321141251*^9}, {3.910174400655765*^9, 3.910174414796658*^9}, {
+   3.910174549635607*^9, 3.910174560300111*^9}, {3.910174626666651*^9, 
+   3.910174973154921*^9}, {3.910175017778916*^9, 3.9101750713310432`*^9}, {
+   3.91017738946933*^9, 3.910177470190152*^9}, {3.910178129652794*^9, 
+   3.910178241356512*^9}, 3.910178324250072*^9, {3.910178357591382*^9, 
+   3.910178399451689*^9}, {3.910178992493126*^9, 3.910178995710624*^9}, {
+   3.910179162291168*^9, 3.910179201444227*^9}, {3.910179414005417*^9, 
+   3.910179449193817*^9}, {3.910179514703196*^9, 3.91017951581944*^9}, {
+   3.910179578515936*^9, 3.91017970878968*^9}, {3.910180136172731*^9, 
+   3.910180137238148*^9}, {3.9101802701817017`*^9, 3.91018027587186*^9}, {
+   3.910180313426347*^9, 3.9101803814136457`*^9}, {3.910180480143198*^9, 
+   3.910180581328643*^9}, {3.910180623902109*^9, 3.910180661737239*^9}, {
+   3.910180729889738*^9, 3.91018082695752*^9}, {3.910180859850123*^9, 
+   3.910181039901762*^9}, {3.91018109893276*^9, 3.910181109946006*^9}, {
+   3.910181150675158*^9, 3.910181151043914*^9}, {3.910181195561481*^9, 
+   3.910181218391144*^9}, {3.910181254888404*^9, 3.910181332256183*^9}, {
+   3.9101813768245897`*^9, 3.9101814333878713`*^9}, {3.910181487574223*^9, 
+   3.910181667895307*^9}, {3.910181703317657*^9, 3.910181729359448*^9}, {
+   3.910181870044094*^9, 3.910181871341099*^9}, {3.910181936260827*^9, 
+   3.910181957691307*^9}, {3.910182132253949*^9, 3.910182304040979*^9}, {
+   3.910182730948851*^9, 3.9101827324781103`*^9}, {3.91018276993699*^9, 
+   3.910182963090928*^9}, {3.910183016908024*^9, 3.910183039269677*^9}, {
+   3.910183146355048*^9, 3.910183170798534*^9}, {3.910185932503649*^9, 
+   3.910186023701947*^9}, 3.910186143328268*^9, {3.910186194316885*^9, 
+   3.91018633553351*^9}, {3.910186463391351*^9, 3.910186463512763*^9}, 
+   3.910187098460095*^9, {3.910187184393136*^9, 3.910187184809964*^9}, {
+   3.910190238875058*^9, 3.910190265374802*^9}, 3.910190425544875*^9, {
+   3.910190503585042*^9, 3.910190542104833*^9}, {3.910190797676325*^9, 
+   3.910190809392297*^9}, {3.910190865668625*^9, 3.910190897787694*^9}, {
+   3.910191032181732*^9, 3.910191060861058*^9}, {3.910191094241951*^9, 
+   3.91019109444727*^9}, {3.910191223364172*^9, 3.910191225548338*^9}, {
+   3.910191303523239*^9, 3.910191311122233*^9}, {3.910191450241115*^9, 
+   3.91019147187486*^9}, {3.91019158924153*^9, 3.910191599213073*^9}, {
+   3.910191996616753*^9, 3.9101921546703467`*^9}, {3.910192203845073*^9, 
+   3.9101923239895287`*^9}, {3.910192828257028*^9, 3.91019286178621*^9}, {
+   3.9101931128357697`*^9, 3.910193168368524*^9}, {3.9102002367196813`*^9, 
+   3.910200272989828*^9}, {3.910200666148717*^9, 3.910200763090418*^9}, {
+   3.910200815140826*^9, 3.910200846053565*^9}, {3.910200909719307*^9, 
+   3.910200969630881*^9}, {3.910201083849094*^9, 3.910201092502157*^9}, {
+   3.910201515009213*^9, 3.910201517059476*^9}, {3.910201706015989*^9, 
+   3.910201725710278*^9}, {3.9102021199358373`*^9, 3.910202127684133*^9}, {
+   3.9102022950173693`*^9, 3.9102023253421307`*^9}, {3.910203015925531*^9, 
+   3.910203080080163*^9}, {3.910550277824197*^9, 3.910550298189039*^9}, {
+   3.927801402502026*^9, 3.927801436399679*^9}, {3.9278015784318027`*^9, 
+   3.927801603177984*^9}, {3.927801780292001*^9, 3.927801786084281*^9}, {
+   3.9278018489779367`*^9, 3.927801874621359*^9}, {3.92780212250441*^9, 
+   3.927802126036237*^9}, {3.927802781461997*^9, 3.927802782479588*^9}, {
+   3.927802877217185*^9, 3.9278029053441057`*^9}, {3.927803036140408*^9, 
+   3.927803159889675*^9}, {3.927803501462229*^9, 3.927803515889655*^9}, {
+   3.927803603940919*^9, 3.927803637588081*^9}},
+ CellLabel->
+  "In[611]:=",ExpressionUUID->"667a598f-fef3-441a-8d75-ed9efffa7eaa"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Data export", "Subsection",
+ CellChangeTimes->{{3.910193710161592*^9, 
+  3.910193711738209*^9}},ExpressionUUID->"371fff1a-4d84-4351-8690-\
+8e1e2b9855ec"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"d", "=", 
+   RowBox[{
+    RowBox[{"tabularize", "[", "chemicals", "]"}], "[", "\"\<ST*.json\>\"", 
+    "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Length", "[", "d", "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<tabularized_results.csv\>\"", ",", "\[IndentingNewLine]", 
+   RowBox[{"d", "/.", 
+    RowBox[{
+     RowBox[{"Missing", "[", "]"}], "->", "\"\<\>\""}]}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"TableHeadings", "->", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<file\>\"", ",", "\"\<extractant1\>\"", ",", 
+      "\"\<extractant1 conc. (M)\>\"", ",", "\[IndentingNewLine]", 
+      "\"\<extractant2\>\"", ",", "\"\<extractant2 conc. (M)\>\"", ",", 
+      "\[IndentingNewLine]", "\"\<holdback\>\"", ",", 
+      "\"\<holdback conc. (M)\>\"", ",", "\[IndentingNewLine]", 
+      "\"\<acid conc. (M)\>\"", ",", "\"\<nitrate conc. (M)\>\"", ",", 
+      "\[IndentingNewLine]", "\"\<solvent1\>\"", ",", 
+      "\"\<solvent1 vol fraction\>\"", ",", "\[IndentingNewLine]", 
+      "\"\<solvent2\>\"", ",", "\"\<solvent2 vol fraction\>\"", ",", 
+      "\[IndentingNewLine]", "\"\<temperature (C)\>\"", ",", 
+      "\"\<time (min)\>\"", ",", "\[IndentingNewLine]", "\"\<metal\>\"", ",", 
+      "\"\<logD\>\""}], "}"}]}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.910186958295129*^9, 3.910186980366803*^9}, {
+   3.910190913579601*^9, 3.910190915578043*^9}, {3.910191184351988*^9, 
+   3.910191186611482*^9}, {3.910193459272642*^9, 3.910193583327085*^9}, {
+   3.910193625646534*^9, 3.91019363584908*^9}, {3.91019368338316*^9, 
+   3.910193690053857*^9}, {3.910200984928677*^9, 3.910201008533442*^9}, {
+   3.910202485055651*^9, 3.910202488402916*^9}, {3.910203086064088*^9, 
+   3.9102030862276993`*^9}, {3.910528455213562*^9, 3.910528458727794*^9}, {
+   3.9278016993337097`*^9, 3.927801701444809*^9}, 3.927802560778438*^9, {
+   3.9278033152921133`*^9, 3.9278033204303513`*^9}},
+ CellLabel->
+  "In[654]:=",ExpressionUUID->"be6eabd6-4d25-47d5-abee-c1c8222d9d12"],
+
+Cell[BoxData["1104"], "Output",
+ CellChangeTimes->{
+  3.910190916870842*^9, 3.91019106780111*^9, 3.910191141323174*^9, 
+   3.910191187662837*^9, 3.910191229337551*^9, 3.910191328913764*^9, 
+   3.910192884504137*^9, 3.910193184020473*^9, 3.910193721340919*^9, 
+   3.910200278255595*^9, 3.910201013064147*^9, 3.910201099857485*^9, 
+   3.910201565231419*^9, 3.910201741434929*^9, 3.910201979556032*^9, 
+   3.910202407318696*^9, 3.910202493441289*^9, {3.910203083538055*^9, 
+   3.910203087715734*^9}, 3.910550348517029*^9, 3.927801450112529*^9, {
+   3.927801612475719*^9, 3.9278016165799103`*^9}, 3.927801798590279*^9, 
+   3.9278018825660048`*^9, 3.927802156090968*^9, 3.927802564386044*^9, 
+   3.9278031840527143`*^9, 3.92780332410504*^9, 3.9278035387841463`*^9, 
+   3.927803644805067*^9},
+ CellLabel->
+  "Out[655]=",ExpressionUUID->"b3f75265-8ce7-47cb-86ad-3716110b7c97"],
+
+Cell[BoxData["\<\"tabularized_results.csv\"\>"], "Output",
+ CellChangeTimes->{
+  3.910190916870842*^9, 3.91019106780111*^9, 3.910191141323174*^9, 
+   3.910191187662837*^9, 3.910191229337551*^9, 3.910191328913764*^9, 
+   3.910192884504137*^9, 3.910193184020473*^9, 3.910193721340919*^9, 
+   3.910200278255595*^9, 3.910201013064147*^9, 3.910201099857485*^9, 
+   3.910201565231419*^9, 3.910201741434929*^9, 3.910201979556032*^9, 
+   3.910202407318696*^9, 3.910202493441289*^9, {3.910203083538055*^9, 
+   3.910203087715734*^9}, 3.910550348517029*^9, 3.927801450112529*^9, {
+   3.927801612475719*^9, 3.9278016165799103`*^9}, 3.927801798590279*^9, 
+   3.9278018825660048`*^9, 3.927802156090968*^9, 3.927802564386044*^9, 
+   3.9278031840527143`*^9, 3.92780332410504*^9, 3.9278035387841463`*^9, 
+   3.927803644993568*^9},
+ CellLabel->
+  "Out[656]=",ExpressionUUID->"8d1d7013-cb5b-4840-a7b7-132af5dfdb3f"]
+}, Open  ]],
+
+Cell["\<\
+Caveats:
+- Nitrate concentration is poorly defined; there are examples like ST106 in \
+which HNO3 is specified as an acid, but the amount is implied only by the pH\
+\>", "Text",
+ CellChangeTimes->{{3.927802570937091*^9, 
+  3.927802625577787*^9}},ExpressionUUID->"2f137f1b-f4ed-467e-bc01-\
+3d13fa66f7d8"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1203, 847},
+WindowMargins->{{77, Automatic}, {Automatic, 0}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+SpellingDictionaries->{"CorrectWords"->{
+ "Fordham", "Lipinski's", "Schrier", "Norquist", "Tham", "extractants", 
+  "extractant"}},
+FrontEndVersion->"14.0 for Mac OS X x86 (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"7e8a2cbe-b617-402a-a953-bbdb09a3c738"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 947, 18, 73, "Input",ExpressionUUID->"7c8640a4-6e29-4d79-a917-b9f9735618ed"],
+Cell[CellGroupData[{
+Cell[1530, 42, 186, 3, 67, "Section",ExpressionUUID->"3c1ccf77-124e-4dd5-a4ee-8519311b3781"],
+Cell[CellGroupData[{
+Cell[1741, 49, 190, 3, 54, "Subsection",ExpressionUUID->"c37a1e3e-1ae3-4e2f-8f8f-74fb649b06e9"],
+Cell[1934, 54, 531, 10, 58, "Text",ExpressionUUID->"db69afd5-4c4b-4e79-9945-ca21fb050949"],
+Cell[CellGroupData[{
+Cell[2490, 68, 1311, 30, 109, "Input",ExpressionUUID->"e7a5c6c3-5c19-460d-b683-e06b3e236137"],
+Cell[3804, 100, 333, 8, 38, "Output",ExpressionUUID->"a536a75d-1b7d-4dfd-bc7b-0f0e9aa05436"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4174, 113, 1285, 29, 109, "Input",ExpressionUUID->"18f254cd-0549-4029-bd8e-3eabe8d7174d"],
+Cell[5462, 144, 276, 6, 38, "Output",ExpressionUUID->"f5f945ca-8e7c-4a8b-983d-0b9bbc6ba43c"]
+}, Open  ]],
+Cell[5753, 153, 461, 8, 58, "Text",ExpressionUUID->"60d50fe3-10db-49ff-8c7e-a2a996a920da"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6251, 166, 154, 3, 54, "Subsection",ExpressionUUID->"3362e98a-2eda-42ae-8ef1-6bc52d2d8d63"],
+Cell[CellGroupData[{
+Cell[6430, 173, 2258, 56, 283, "Input",ExpressionUUID->"b9902538-58cf-44d5-8df6-82fa0aa1186b"],
+Cell[8691, 231, 2140, 48, 248, "Output",ExpressionUUID->"5ed12228-2dae-4d1b-8952-f2214f7b6997"],
+Cell[10834, 281, 2119, 48, 248, "Output",ExpressionUUID->"02969cf7-1e19-40df-bfd2-31e2479a72d1"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13014, 336, 156, 3, 67, "Section",ExpressionUUID->"1923552a-7307-4d4d-9d33-ec5826bcbd34"],
+Cell[13173, 341, 1160, 32, 94, "Input",ExpressionUUID->"0a74e1b8-31ec-4f44-9885-0034b0d7f8c6"],
+Cell[CellGroupData[{
+Cell[14358, 377, 619, 14, 94, "Input",ExpressionUUID->"15d647cb-86b2-447e-8fad-54720f585e54"],
+Cell[14980, 393, 4846, 138, 248, "Output",ExpressionUUID->"81ad43b9-7725-4fc0-a47f-9bb98779f7e3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19863, 536, 158, 3, 54, "Subsection",ExpressionUUID->"1a323cb5-4ea7-42d6-9b31-eb943a5d42e4"],
+Cell[20024, 541, 906, 25, 52, "Input",ExpressionUUID->"b4d355b9-13a4-4239-a760-f3b239d937b3"],
+Cell[20933, 568, 373, 9, 30, "Input",ExpressionUUID->"ae29e1ad-0a51-4872-8105-9b32753bcb6f"],
+Cell[21309, 579, 251, 4, 35, "Text",ExpressionUUID->"eee32019-019a-408a-8126-d746df8fba3b"],
+Cell[CellGroupData[{
+Cell[21585, 587, 302, 7, 30, "Input",ExpressionUUID->"9af61554-7af1-49be-9b4a-9aa48913b506"],
+Cell[21890, 596, 204, 4, 34, "Output",ExpressionUUID->"b8076b09-9c7a-418b-b756-a6116c481a90"]
+}, Open  ]],
+Cell[22109, 603, 192, 3, 35, "Text",ExpressionUUID->"57f941dd-0986-4aee-9ced-df909cbeff50"],
+Cell[CellGroupData[{
+Cell[22326, 610, 617, 13, 52, "Input",ExpressionUUID->"beea7e66-3bb8-4aad-ad2d-e4ac746693eb"],
+Cell[22946, 625, 2906, 88, 1203, "Output",ExpressionUUID->"c3918f80-d65f-449c-be2e-8cbc6bfa5e6a"]
+}, Open  ]],
+Cell[25867, 716, 308, 7, 35, "Text",ExpressionUUID->"36e79582-8b9d-4f7f-8ad1-4c843eff97da"],
+Cell[CellGroupData[{
+Cell[26200, 727, 449, 11, 30, "Input",ExpressionUUID->"c5f1d689-ae3e-4377-a00f-a8d881aab581"],
+Cell[26652, 740, 382, 9, 34, "Output",ExpressionUUID->"1213cd8a-9d8d-40b1-b833-1baee0a364d3"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27083, 755, 164, 3, 54, "Subsection",ExpressionUUID->"8401d3af-75c7-437a-8c76-faa3cfeee46a"],
+Cell[27250, 760, 1425, 39, 94, "Input",ExpressionUUID->"f3b77470-852f-4d0a-a8ea-a1953a95c2c3"],
+Cell[28678, 801, 323, 9, 81, "Text",ExpressionUUID->"f909bcf5-5eed-4e27-8347-bbd3c906eac6"],
+Cell[CellGroupData[{
+Cell[29026, 814, 466, 11, 30, "Input",ExpressionUUID->"fbde6c8f-9c36-4618-9588-4f2cfba53b93"],
+Cell[29495, 827, 2458, 68, 98, "Output",ExpressionUUID->"39ed86e7-1f85-4b31-a9ed-0b91c57d91e0"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32002, 901, 156, 3, 54, "Subsection",ExpressionUUID->"961e0182-7073-4320-acab-6892e27fd332"],
+Cell[32161, 906, 665, 18, 52, "Input",ExpressionUUID->"ecde2fd3-5df4-4c06-9a91-1e65c8d36551"],
+Cell[32829, 926, 426, 10, 30, "Input",ExpressionUUID->"b5d831c4-60ae-4b5b-b193-860695d08c18"],
+Cell[33258, 938, 188, 3, 35, "Text",ExpressionUUID->"7254c723-1674-4015-92f7-93205b7af810"],
+Cell[CellGroupData[{
+Cell[33471, 945, 383, 10, 30, "Input",ExpressionUUID->"cbc4bf30-5932-456d-869f-f4e6afcecda0"],
+Cell[33857, 957, 354, 8, 34, "Output",ExpressionUUID->"e1d512a5-3460-4ce1-b8bf-28e4048cf3a6"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34272, 972, 163, 3, 67, "Section",ExpressionUUID->"5cea6509-7105-429a-aa65-0269f1289537"],
+Cell[34438, 977, 181, 3, 35, "Text",ExpressionUUID->"144f6606-3316-4574-ab06-7ead83e3ceb1"],
+Cell[34622, 982, 246, 4, 32, "Item",ExpressionUUID->"70da48ba-04d3-4fd1-aef6-93abb17ea69d"],
+Cell[34871, 988, 232, 4, 32, "Item",ExpressionUUID->"f45c30ae-79c9-4a66-b7ca-c2fb96f8b727"],
+Cell[35106, 994, 247, 4, 32, "Item",ExpressionUUID->"f3a719c9-8b97-4f46-8b86-a3b92fba89f3"],
+Cell[35356, 1000, 202, 4, 32, "Item",ExpressionUUID->"9804355a-b039-49f8-b27f-5f6af1d1561f"],
+Cell[35561, 1006, 198, 4, 32, "Item",ExpressionUUID->"30512b73-2978-45df-ad5d-3fdf4d803f84"],
+Cell[35762, 1012, 207, 4, 32, "Item",ExpressionUUID->"d597de6e-7b3e-4a32-8ead-5866e80f14c9"],
+Cell[CellGroupData[{
+Cell[35994, 1020, 200, 4, 32, "Item",ExpressionUUID->"571f0266-2882-4da8-b2ef-91036e854be4"],
+Cell[36197, 1026, 1746, 39, 178, "Input",ExpressionUUID->"3b6f15f5-cfcd-4d61-9f54-1dd33dbc02f8"],
+Cell[37946, 1067, 27712, 657, 2929, "Input",ExpressionUUID->"667a598f-fef3-441a-8d75-ed9efffa7eaa"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[65695, 1729, 159, 3, 54, "Subsection",ExpressionUUID->"371fff1a-4d84-4351-8690-8e1e2b9855ec"],
+Cell[CellGroupData[{
+Cell[65879, 1736, 2060, 40, 283, "Input",ExpressionUUID->"be6eabd6-4d25-47d5-abee-c1c8222d9d12"],
+Cell[67942, 1778, 869, 14, 34, "Output",ExpressionUUID->"b3f75265-8ce7-47cb-86ad-3716110b7c97"],
+Cell[68814, 1794, 896, 14, 82, "Output",ExpressionUUID->"8d1d7013-cb5b-4840-a7b7-132af5dfdb3f"]
+}, Open  ]],
+Cell[69725, 1811, 313, 7, 58, "Text",ExpressionUUID->"2f137f1b-f4ed-467e-bc01-3d13fa66f7d8"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
